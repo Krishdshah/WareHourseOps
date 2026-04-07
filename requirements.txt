@@ -1,0 +1,6 @@
+openenv-core
+pandas
+duckdb
+pydantic
+huggingface_hub
+uv
