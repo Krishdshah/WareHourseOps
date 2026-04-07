@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-pydantic
-sqlite3-api
-openai
-python-dotenv
-alembic
-sqlalchemy
-# openenv-core (if available in public pypi, but we'll assume it's custom or not needed for the server to run basic OpenEnv spec)
