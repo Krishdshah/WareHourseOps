@@ -55,7 +55,8 @@ class WarehouseopsEnv(
             Dictionary representation suitable for JSON encoding
         """
         return {
-            "message": action.message,
+            "action": action.action,
+            "sql": action.sql,
         }
 
     def _parse_result(self, payload: Dict) -> StepResult[WarehouseopsObservation]:
@@ -70,11 +71,13 @@ class WarehouseopsEnv(
         """
         obs_data = payload.get("observation", {})
         observation = WarehouseopsObservation(
-            echoed_message=obs_data.get("echoed_message", ""),
-            message_length=obs_data.get("message_length", 0),
+            message=obs_data.get("message", ""),
+            schema=obs_data.get("schema"),
+            preview=obs_data.get("preview"),
+            error=obs_data.get("error"),
+            current_sql=obs_data.get("current_sql"),
             done=payload.get("done", False),
             reward=payload.get("reward"),
-            metadata=obs_data.get("metadata", {}),
         )
 
         return StepResult(

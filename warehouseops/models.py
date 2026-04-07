@@ -12,16 +12,30 @@ The warehouseops environment is a simple test environment that echoes back messa
 
 from openenv.core.env_server.types import Action, Observation
 from pydantic import Field
+from typing import Optional, Dict, Any, List
 
 
 class WarehouseopsAction(Action):
-    """Action for the Warehouseops environment - just a message to echo."""
+    """Action for SQL Debugging."""
 
-    message: str = Field(..., description="Message to echo back")
+    action: str = Field(..., description="Action type: 'run_sql', 'edit_sql', or 'submit'")
+    sql: Optional[str] = Field(None, description="The SQL query to execute or save")
 
 
 class WarehouseopsObservation(Observation):
-    """Observation from the Warehouseops environment - the echoed message."""
+    """Observation for SQL Debugging."""
 
-    echoed_message: str = Field(default="", description="The echoed message")
-    message_length: int = Field(default=0, description="Length of the echoed message")
+    message: str = Field(default="", description="Status message")
+    schema_info: Optional[Dict[str, List[str]]] = Field(
+        None, alias="schema", description="Database schema: {table_name: [columns]}"
+    )
+    preview: Optional[List[Dict[str, Any]]] = Field(
+        None, description="First few rows of the query result"
+    )
+    error: Optional[str] = Field(None, description="SQL error message if execution fails")
+    current_sql: Optional[str] = Field(
+        None, description="The SQL currently stored in the environment"
+    )
+
+    class Config:
+        populate_by_name = True
