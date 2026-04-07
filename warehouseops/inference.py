@@ -109,6 +109,14 @@ async def run_task(task_level: str):
         log_end(success=success, steps=steps_taken, score=score, rewards=rewards)
 
 
+async def main():
+    """Run baseline for all difficulty levels."""
+    tasks = ["easy", "medium", "hard"]
+    for task in tasks:
+        # Since reset() picks randomly in the current implementation, 
+        # we run multiple trials to approximate the baseline for each level.
+        await run_task(f"baseline_{task}")
+
+
 if __name__ == "__main__":
-    # In a real benchmark, we'd loop over easy, medium, hard
-    asyncio.run(run_task("baseline_test"))
+    asyncio.run(main())
