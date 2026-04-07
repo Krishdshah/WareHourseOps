@@ -4,3 +4,6 @@ duckdb
 pydantic
 huggingface_hub
 uv
+pandas
+duckdb
+pydantic

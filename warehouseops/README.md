@@ -1,46 +1,75 @@
+---
+title: Warehouseops Debugger
+emoji: 💻
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 # WarehouseOps — Data Warehouse Debugger Environment
 
-A real-world RL environment for training and evaluating data engineering agents.
+WarehouseOps is a professional data engineering reinforcement learning environment designed for the OpenEnv Meta Hackathon. It simulates the high-stakes task of debugging broken SQL transformation pipelines in a production data warehouse.
 
-## Overview
-Agents act as Data Engineers tasked with debugging and fixing broken SQL pipelines in a data warehouse. They must inspect schemas, run test queries, and submit verified SQL fixes.
+## 1. Environment Overview
+To get started with WarehouseOps on your local machine or via Hugging Face:
 
-## Tasks
+- **Initial Setup**: Open the [thekrishdshah/warehouseops](https://huggingface.co/spaces/thekrishdshah/warehouseops) Space on the Hugging Face Hub.
+- **Navigation**: Click the "three dots" icon in the top-right corner and select **"Run locally"**.
+- **Command Execution**: Copy the provided `docker run` command to spin up the SQL debugging environment in a local container:
+  ```bash
+  docker run -it -p 8000:8000 thekrishdshah/warehouseops
+  ```
+
+## 2. Deploy with CLI
+You can modify this environment and push your own version using the OpenEnv CLI:
+
+- **Directory Navigation**: 
+  ```bash
+  cd warehouseops
+  ```
+- **Standard Deployment**: Deploy to your default namespace:
+  ```bash
+  openenv push
+  ```
+- **Specific Repo Deployment**: Use the `--repo-id` flag to target a specific Space:
+  ```bash
+  openenv push --repo-id your-username/custom-warehouseops
+  ```
+- **Privacy Settings**: To deploy as a private environment (visible only to you and your team):
+  ```bash
+  openenv push --private
+  ```
+
+## 3. Space Configuration (`openenv.yaml`)
+The `openenv.yaml` manifest file in this repository controls how the Space is served. Key configuration values include:
+
+- **name**: `warehouseops` — The unique identifier for the environment.
+- **version**: `0.1.0` — The current semantic version.
+- **description**: "SQL Data Warehouse Debugger Environment" — A summary of the custom SQL challenges.
+
+## 4. Hardware Options
+WarehouseOps is optimized to run on standard CPU tiers but can benefit from hardware acceleration in complex multi-agent simulations:
+
+| Tier | vCPU | RAM | Cost |
+| :--- | :--- | :--- | :--- |
+| **CPU Basic (Free)** | 2 | 16GB | Free |
+| **GPU T4 (Small)** | 4 | 15GB | Paid |
+| **GPU L4 (Medium)** | 8 | 32GB | Paid |
+
+---
+
+## 🛠️ Tasks
 1. **Easy (`column_fix`)**: Fix a column name mismatch in a `GROUP BY` clause.
-2. **Medium (`join_fix`)**: Resolve a logic error in a `JOIN` condition between two tables.
-3. **Hard (`pipeline_fix`)**: Multi-step pipeline fix involving joins, aggregations, and row filtering.
+2. **Medium (`join_fix`)**: Resolve a logic error in a `JOIN` condition.
+3. **Hard (`pipeline_fix`)**: Multi-step pipeline fix involving joins and aggregations.
 
-## Interface
-- **Action space**: 
-  - `run_sql`: Execute a query and see results.
-  - `edit_sql`: Update the current draft SQL.
-  - `submit`: Final submission for grading.
-- **Observation space**:
-  - `schema`: Table names and column lists.
-  - `preview`: First 5 rows of query results.
-  - `error`: Traceback if SQL execution fails.
-  - `current_sql`: The current state of the code.
-
-## Reward Function
-- **+1.0**: Exact match with expected output.
-- **+0.1 to +0.9**: Partial rewards for correct columns, row counts, and value heuristics.
-- **-0.05**: Small penalty for syntax errors.
-- **-0.1**: Penalty for reaching max steps without a fix.
-
-## Setup & Usage
-1. Install dependencies:
+## 🚀 Setup & Usage
+1. **Install dependencies**:
    ```bash
    pip install pandas duckdb openenv-core pydantic
    ```
-2. Run baseline inference:
+2. **Run baseline inference**:
    ```bash
    python inference.py
    ```
-3. Build for deployment:
-   ```bash
-   openenv build
-   ```
-
-## Requirements
-- Python 3.10+
-- Docker
