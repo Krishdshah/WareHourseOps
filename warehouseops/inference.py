@@ -3,13 +3,25 @@ import os
 import json
 from typing import List, Optional
 from openai import OpenAI
-from models import WarehouseopsAction
-from server.warehouseops_environment import WarehouseopsEnvironment
+try:
+    from models import WarehouseopsAction
+    from server.warehouseops_environment import WarehouseopsEnvironment
+except (ImportError, ValueError, ModuleNotFoundError):
+    try:
+        from warehouseops.models import WarehouseopsAction
+        from warehouseops.server.warehouseops_environment import WarehouseopsEnvironment
+    except (ImportError, ModuleNotFoundError):
+        # Fallback for complex nesting
+        import sys
+        import os
+        sys.path.append(os.getcwd())
+        from models import WarehouseopsAction
+        from server.warehouseops_environment import WarehouseopsEnvironment
 
 # Load environment variables
 API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o-mini")
-HF_TOKEN = os.getenv("HF_TOKEN", "")
+HF_TOKEN = os.getenv("HF_TOKEN")  # No default - strict requirement
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", HF_TOKEN)
 
 MAX_STEPS = 5
