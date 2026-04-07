@@ -4,7 +4,7 @@ version: 0.1
 description: SQL Data Warehouse Debugger Environment
 type: space
 runtime: fastapi
-app: warehouseops.server.app:app
+app: server.app:app
 port: 8000
 
 tasks:

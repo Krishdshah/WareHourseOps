@@ -6,9 +6,19 @@ import pandas as pd
 from openenv.core.env_server.interfaces import Environment
 from openenv.core.env_server.types import State
 
-from ..models import WarehouseopsAction, WarehouseopsObservation
-from ..tasks import TASKS
-from ..graders import grade_output
+try:
+    from ..models import WarehouseopsAction, WarehouseopsObservation
+    from ..tasks import TASKS
+    from ..graders import grade_output
+except (ImportError, ValueError, ModuleNotFoundError):
+    try:
+        from warehouseops.models import WarehouseopsAction, WarehouseopsObservation
+        from warehouseops.tasks import TASKS
+        from warehouseops.graders import grade_output
+    except (ImportError, ModuleNotFoundError):
+        import models
+        from tasks import TASKS
+        from graders import grade_output
 
 
 class WarehouseopsEnvironment(Environment):

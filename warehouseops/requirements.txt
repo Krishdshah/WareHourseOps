@@ -1,0 +1,6 @@
+duckdb
+pandas
+openenv-core
+pydantic
+fastapi
+uvicorn

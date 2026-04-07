@@ -6,6 +6,12 @@
 
 """Warehouseops environment server components."""
 
-from .warehouseops_environment import WarehouseopsEnvironment
+try:
+    from .warehouseops_environment import WarehouseopsEnvironment
+except (ImportError, ModuleNotFoundError):
+    try:
+        from warehouseops.server.warehouseops_environment import WarehouseopsEnvironment
+    except (ImportError, ModuleNotFoundError):
+        from server.warehouseops_environment import WarehouseopsEnvironment
 
 __all__ = ["WarehouseopsEnvironment"]
