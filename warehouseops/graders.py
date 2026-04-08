@@ -4,7 +4,7 @@ import pandas as pd
 def grade_output(output, expected):
     """Programmatic grader to compare SQL results with partial credit."""
     if output is None or not isinstance(output, pd.DataFrame):
-        return 0.0
+        return 0.01  # Minimum score strictly > 0
 
     try:
         # Standardize column names (lowercase) and types for comparison
@@ -13,9 +13,9 @@ def grade_output(output, expected):
 
         # Check for exact equality first
         if output.equals(expected):
-            return 1.0
+            return 0.99  # Maximum score strictly < 1
 
-        score = 0.0
+        score = 0.01
         # Partial Credit 1: Correct columns
         if set(output.columns) == set(expected.columns):
             score += 0.3
@@ -36,7 +36,8 @@ def grade_output(output, expected):
         if output.shape == expected.shape:
             score += 0.1
 
-        return min(score, 0.9)  # Cap partial rewards below 1.0
+        # Return score clamped between 0.01 and 0.95
+        return min(max(score, 0.01), 0.95)
 
     except Exception:
-        return 0.0
+        return 0.01

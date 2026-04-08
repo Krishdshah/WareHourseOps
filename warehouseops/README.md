@@ -1,6 +1,5 @@
 ---
 title: Warehouseops Debugger
-emoji: 💻
 colorFrom: green
 colorTo: blue
 sdk: docker
@@ -60,12 +59,12 @@ WarehouseOps is optimized to run on standard CPU tiers but can benefit from hard
 
 ---
 
-## 🛠️ Tasks
+## Tasks
 1. **Easy (`column_fix`)**: Fix a column name mismatch in a `GROUP BY` clause.
 2. **Medium (`join_fix`)**: Resolve a logic error in a `JOIN` condition.
 3. **Hard (`pipeline_fix`)**: Multi-step pipeline fix involving joins and aggregations.
 
-## 🚀 Setup & Usage
+## Setup & Usage
 1. **Install dependencies**:
    ```bash
    pip install pandas duckdb openenv-core pydantic

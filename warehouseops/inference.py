@@ -113,8 +113,8 @@ async def run_task(task_level: str):
                 break
         
         total_reward = sum(rewards)
-        # Score is normalized 0-1. Max possible is roughly 1.0 (from submit) + small step rewards.
-        score = min(max(total_reward, 0.0), 1.0)
+        # Score must be strictly between 0 and 1 for Phase 2 validation
+        score = min(max(total_reward, 0.01), 0.99)
         success = score >= 0.8
         
     finally:
